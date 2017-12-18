@@ -6,6 +6,16 @@ public class RandSeed {
 	private long run_seed;
 	private long division;
 	
+	private long[] vmin = new long[2];
+	private long[] vmax = new long[2];
+	
+	public RandSeed(long u1, long s1, long u2, long s2) {
+		vmin[0] = u1;
+		vmax[0] = s1;
+		vmin[1] = u2;
+		vmax[1] = s2;
+	}
+	
 	private long choosePrime(long min, long max) {
 		long seed = min + (long)(Math.random()*(max-min)*0.8);
 		return nextPrime(seed);
@@ -17,8 +27,8 @@ public class RandSeed {
 	}
 	
 	public void generate() {
-		long p = choosePrime(0x10000L, 0x100000L);
-		long q = choosePrime(0x100L, 0x1000L);
+		long p = choosePrime(vmin[0], vmax[0]);
+		long q = choosePrime(vmin[1], vmax[1]);
 		division = p*q;
 		long oula = (p-1)*(q-1);
 		for(run_seed = go_seed; gcd(run_seed, oula) != 1; run_seed = nextPrime(run_seed + 2));
